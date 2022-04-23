@@ -53,8 +53,9 @@ export class GameService {
     }
     await this.findGameById(id);
     const newGame = { id, ...updateGameDto };
+    await this.gameRepository.save(newGame);
 
-    return await this.gameRepository.save(newGame);
+    return await this.gameRepository.findOne({ id });
   }
 
   async saveGame(game: GameEntity): Promise<GameEntity> {
