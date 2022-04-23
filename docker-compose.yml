@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  ultragame-nestjs:
+    container_name: ultragame-nestjs
+    image: ultragame-img
+    build:
+      context: ./
+    stdin_open: true
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    command: npm run start:prod
+    depends_on:
+      - ultragame-db
+    networks:
+      - webnet
+
+  ultragame-db:
+    container_name: ultragame-db
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'BiLmmC39HnHQV7Fbj5MG-67d6MF'
+      MYSQL_DATABASE: ultragame
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - './src/database/scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql'
+      - './src/database/scripts/models.sql:/docker-entrypoint-initdb.d/2.sql'
+      - mysql-data:/var/lib/mysql
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
