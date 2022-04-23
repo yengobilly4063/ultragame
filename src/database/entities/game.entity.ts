@@ -23,6 +23,9 @@ export class GameEntity {
   @Column('simple-array', { nullable: true })
   tags: string[];
 
+  @Column('boolean', { default: false })
+  discounted: boolean;
+
   @ManyToOne(() => PublisherEntity)
   @JoinColumn({ name: 'publisherId', referencedColumnName: 'id' })
   publisher?: PublisherEntity;

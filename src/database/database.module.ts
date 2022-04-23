@@ -14,6 +14,7 @@ import entities from './entities';
         username: configService.get('MYSQL_USERNAME'),
         password: configService.get('MYSQL_PASSWORD'),
         database: configService.get('MYSQL_DATABASE'),
+        logging: true,
         entities,
         synchronize: true,
       }),
