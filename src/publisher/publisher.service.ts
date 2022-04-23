@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PublisherEntity } from 'src/database/entities/publisher.entity';
 import { GameService } from 'src/game/game.service';
 import { CreatePublisherDto } from 'src/shared/dtos/publisher.dto';
+import { NotFound } from 'src/shared/exceptions/not-found';
 import { Publisher } from 'src/shared/interfaces/publisher.interface';
 import { Repository } from 'typeorm';
 
@@ -26,7 +27,7 @@ export class PublisherService {
     if (existingPublisher) {
       throw new HttpException(
         'Publisher with title or siret already exists',
-        HttpStatus.CONFLICT,
+        HttpStatus.BAD_REQUEST,
       );
     }
 
@@ -44,10 +45,7 @@ export class PublisherService {
   async findPublisherById(id: string): Promise<PublisherEntity> {
     const foundPubllisher = await this.publisherRepository.findOne({ id });
     if (!foundPubllisher) {
-      throw new HttpException(
-        'Publisher resource not found',
-        HttpStatus.NOT_FOUND,
-      );
+      throw new NotFound('Publisher');
     }
     return foundPubllisher;
   }

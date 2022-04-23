@@ -38,7 +38,7 @@ export class GameService {
     if (foundGame) {
       throw new HttpException(
         'Game resource with title already exists',
-        HttpStatus.CONFLICT,
+        HttpStatus.BAD_REQUEST,
       );
     }
     const newGame = this.gameRepository.create(createGameDto);
