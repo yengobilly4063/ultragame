@@ -23,6 +23,8 @@ $ docker-compose up
 $Stop and Remove running containers
 $ ctrl && c|z
 $ docker-compose down
+
+$ api url : http://localhost:300
 ```
 
 ## Stay in touch
